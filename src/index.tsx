@@ -1,12 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import App from './components/App';
+import { RootStore } from './store/store';
+import { Provider } from 'mobx-react';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+const rootStore = new RootStore();
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+const render = () => (
+  <Provider {...rootStore} rootStore={rootStore}>
+    <App />
+  </Provider>
+);
+
+ReactDOM.render(render(), document.getElementById('root'));
+
+declare const module: any;
+if (module.hot) {
+  module.hot.accept('./store/store', render);
+}
