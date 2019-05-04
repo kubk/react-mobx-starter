@@ -3,7 +3,7 @@ import { Route, ViewMap } from 'mobx-state-router';
 import { ReactNode } from 'react';
 import { About } from './components/About';
 import { NotFound } from './components/NotFound';
-import { Home } from './components/Home';
+import { Main } from './components/Main';
 
 interface ExtendedRoute extends Route {
   component: ReactNode;
@@ -11,9 +11,9 @@ interface ExtendedRoute extends Route {
 
 export const routes: ExtendedRoute[] = [
   {
-    name: 'home',
+    name: 'main',
     pattern: '/',
-    component: <Home />
+    component: <Main />
   },
   {
     name: 'about',
