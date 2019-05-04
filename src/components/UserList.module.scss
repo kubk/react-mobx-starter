@@ -1,0 +1,46 @@
+.users {
+  .user {
+    display: flex;
+    align-items: center;
+    border-top: 1px solid var(--c-divider);
+
+    &:hover {
+      background-color: #fafafa;
+    }
+
+    .input {
+      border: 0;
+      padding: 12px 24px;
+      background-color: transparent;
+      transition: all 0.3s;
+
+      &:focus {
+        outline: none;
+      }
+    }
+
+    .task-count {
+      font-size: 12px;
+      white-space: nowrap;
+      color: var(--c-gray) !important;
+    }
+
+    .icon:hover .trash {
+      fill: var(--c-black);
+    }
+
+    .trash {
+      width: 14px;
+      height: 14px;
+      transition: all 0.3s;
+      transform: translateY(1px) translateX(6px);
+
+      fill: var(--c-gray);
+      opacity: 0;
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
+}

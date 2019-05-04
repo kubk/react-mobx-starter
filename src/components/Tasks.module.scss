@@ -1,0 +1,19 @@
+@import '../css/config';
+
+.container {
+  box-shadow: var(--shadow-depth-3);
+  border-radius: 4px;
+  background-color: #fff;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    padding: 16px 24px;
+
+    .title {
+      margin: 0;
+      font-size: 16px;
+      color: var(--c-gray);
+    }
+  }
+}

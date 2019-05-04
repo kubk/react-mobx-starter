@@ -1,0 +1,14 @@
+.button {
+  border: 1px solid var(--c-gray);
+  border-radius: 2px;
+  background-color: inherit;
+  font-size: 12px;
+  padding: 5px 16px;
+  color: var(--c-gray);
+  transition: all 0.3s;
+
+  &:hover {
+    border-color: var(--c-gray);
+    color: var(--c-black);
+  }
+}

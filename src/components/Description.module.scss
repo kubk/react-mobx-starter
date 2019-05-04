@@ -1,0 +1,17 @@
+@import '../css/config';
+
+.description {
+  margin: 0 auto;
+  padding-bottom: 64px;
+  width: 560px;
+  text-align: center;
+
+  a {
+    text-decoration: underline;
+    transition: all 0.3s;
+
+    &:hover {
+      color: var(--c-gray);
+    }
+  }
+}

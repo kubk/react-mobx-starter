@@ -1,0 +1,60 @@
+.tasks {
+  .task {
+    display: flex;
+    align-items: center;
+    border-top: 1px solid var(--c-divider);
+
+    &:hover {
+      background-color: #fafafa;
+
+      .trash {
+        opacity: 1;
+      }
+    }
+
+    &.done {
+      .input {
+        text-decoration: line-through;
+        color: var(--c-gray);
+      }
+
+      .icon .svg.check {
+        fill: #38d2d8;
+      }
+    }
+
+    .input {
+      border: 0;
+      padding: 12px 24px;
+      background-color: transparent;
+      transition: all .3s;
+      width: 100%;
+
+      &:focus {
+        outline: none;
+      }
+    }
+
+    .icon {
+      display: block;
+      padding: 12px 24px;
+      width: 14px;
+      height: 14px;
+      fill: var(--c-gray);
+    }
+
+    .icon:hover .trash {
+      fill: var(--c-black);
+    }
+
+    .trash {
+      width: 14px;
+      height: 14px;
+      transition: all 0.3s;
+      transform: translateY(1px) translateX(-12px);
+      fill: var(--c-gray);
+      opacity: 0;
+      cursor: pointer;
+    }
+  }
+}
