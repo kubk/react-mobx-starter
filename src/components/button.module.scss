@@ -6,6 +6,8 @@
   padding: 5px 16px;
   color: var(--c-gray);
   transition: all 0.3s;
+  cursor: pointer;
+  text-transform: uppercase;
 
   &:hover {
     border-color: var(--c-gray);

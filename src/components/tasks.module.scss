@@ -1,15 +1,44 @@
+@import '../css/config';
+
+.container {
+  box-shadow: var(--shadow-depth-3);
+  border-radius: 4px;
+  background-color: #fff;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 24px;
+
+    .title {
+      text-transform: uppercase;
+      margin: 0;
+      font-size: 16px;
+      color: var(--c-gray);
+    }
+  }
+}
+
 .tasks {
   .task {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     border-top: 1px solid var(--c-divider);
+
+    .taskInfo {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
 
     &:hover {
       background-color: #fafafa;
+    }
 
-      .trash {
-        opacity: 1;
-      }
+    .selectAssignee {
+      margin-left: -20px;
     }
 
     &.done {
@@ -26,9 +55,9 @@
     .input {
       border: 0;
       padding: 12px 24px;
+      width: 300px;
       background-color: transparent;
-      transition: all .3s;
-      width: 100%;
+      transition: all 0.3s;
 
       &:focus {
         outline: none;
@@ -37,6 +66,7 @@
 
     .icon {
       display: block;
+      cursor: pointer;
       padding: 12px 24px;
       width: 14px;
       height: 14px;
@@ -51,9 +81,8 @@
       width: 14px;
       height: 14px;
       transition: all 0.3s;
-      transform: translateY(1px) translateX(-12px);
+      transform: translateY(1px) translateX(-25px);
       fill: var(--c-gray);
-      opacity: 0;
       cursor: pointer;
     }
   }

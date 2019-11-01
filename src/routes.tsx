@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { Route, ViewMap } from 'mobx-state-router';
 import { ReactNode } from 'react';
-import { About } from './components/About';
-import { NotFound } from './components/NotFound';
-import { Main } from './components/Main';
+import { About } from './components/about';
+import { NotFound } from './components/not-found';
+import { Main } from './components/main';
 
 interface ExtendedRoute extends Route {
   component: ReactNode;

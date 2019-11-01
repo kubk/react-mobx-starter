@@ -1,13 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './css/index.css';
-import { App } from './components/App';
-import { RootStore } from './store/RootStore';
+import { App } from './components/app';
 import { Provider } from 'mobx-react';
+import { RootStore } from './store/root-store';
 
 const rootStore = new RootStore();
-const storeContext = React.createContext(rootStore);
-export const useStore = () => React.useContext(storeContext);
+export const storeContext = React.createContext(rootStore);
 
 const render = () => (
   <Provider rootStore={rootStore}>
@@ -19,5 +18,5 @@ ReactDOM.render(render(), document.getElementById('root'));
 
 declare const module: any;
 if (module.hot) {
-  module.hot.accept('./store/RootStore', render);
+  module.hot.accept('./store/root-store', render);
 }
