@@ -1,4 +1,4 @@
-@import '../css/config';
+@import '../../css/config';
 
 .container {
   box-shadow: var(--shadow-depth-3);
@@ -37,27 +37,20 @@
       background-color: #fafafa;
     }
 
-    .selectAssignee {
-      margin-left: -20px;
-    }
-
     &.done {
       .input {
         text-decoration: line-through;
         color: var(--c-gray);
       }
-
-      .icon .svg.check {
-        fill: #38d2d8;
-      }
     }
 
     .input {
       border: 0;
-      padding: 12px 24px;
+      padding: 12px 24px 12px 0;
       width: 300px;
       background-color: transparent;
       transition: all 0.3s;
+      color: var(--c-black);
 
       &:focus {
         outline: none;
@@ -67,23 +60,18 @@
     .icon {
       display: block;
       cursor: pointer;
-      padding: 12px 24px;
+      padding: 12px 24px 12px 25px;
       width: 14px;
       height: 14px;
-      fill: var(--c-gray);
-    }
-
-    .icon:hover .trash {
-      fill: var(--c-black);
+      transition: fill 0.3s;
     }
 
     .trash {
       width: 14px;
       height: 14px;
       transition: all 0.3s;
-      transform: translateY(1px) translateX(-25px);
-      fill: var(--c-gray);
       cursor: pointer;
+      margin: 1px 25px 0 16px;
     }
   }
 }

@@ -1,4 +1,4 @@
-@import '../css/config';
+@import '../../css/config';
 
 .usersWrapper {
   .container {
@@ -35,10 +35,11 @@
 
     .input {
       border: 0;
-      padding: 12px 24px;
+      padding: 12px 24px 12px 26px;
       background-color: transparent;
       transition: all 0.3s;
       width: 100px;
+      color: var(--c-black);
 
       &:focus {
         outline: none;
@@ -64,14 +65,8 @@
       width: 14px;
       height: 14px;
       transition: all 0.3s;
-      transform: translateY(1px) translateX(6px);
-
-      fill: var(--c-gray);
-      opacity: 0;
-
-      &:hover {
-        opacity: 1;
-      }
+      margin: 1px 25px 0 16px;
+      cursor: pointer;
     }
   }
 }

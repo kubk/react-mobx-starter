@@ -1,0 +1,28 @@
+import React from 'react';
+import { User } from '../../store/task-api';
+import { observer } from 'mobx-react';
+
+type Props = {
+  value: string | number;
+  onSelect: (userId: number | null) => void;
+  users: User[];
+};
+
+export const AssigneeSelector = observer(({ onSelect, users, value }: Props) => {
+  return (
+    <select
+      value={value}
+      onChange={e => {
+        const userId = Number(e.target.value) || null;
+        onSelect(userId);
+      }}
+    >
+      <option value="">No assignee</option>
+      {users.map((user, i) => (
+        <option key={i} value={user.id}>
+          {user.name}
+        </option>
+      ))}
+    </select>
+  );
+});

@@ -1,4 +1,4 @@
-@import '../css/config';
+@import '../../css/config';
 
 .app {
   padding: 96px 48px 128px;
@@ -7,16 +7,16 @@
 .container {
   display: flex;
   margin: 0 auto;
-  width: 960px;
+  width: 1000px;
 }
 
 .users {
   padding-right: 48px;
-  width: 33%;
+  width: 40%;
 }
 
 .tasks {
-  width: 66%;
+  width: 60%;
 }
 
 .header {
@@ -28,6 +28,7 @@
     line-height: 42px;
     font-family: var(--font-family);
     font-size: 34px;
+    color: var(--c-black);
   }
 
   .lead {
@@ -41,6 +42,7 @@
   padding-bottom: 64px;
   width: 560px;
   text-align: center;
+  color: var(--c-black);
 
   a {
     text-decoration: underline;

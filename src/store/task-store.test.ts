@@ -1,23 +1,34 @@
 import { TaskStore } from './task-store';
-import { TaskApi } from './task-api';
+import { Task, TaskApi, User } from './task-api';
 import { when } from 'mobx';
 
-const createTaskStore = () => {
-  const taskApi = new TaskApi();
-  return new TaskStore(taskApi);
+const taskApiMock: TaskApi = {
+  async getUsers() {
+    return [
+      { id: 1, name: 'John Doe' },
+      { id: 2, name: 'Jane Snow' },
+      { id: 3, name: 'Richard Roe' }
+    ];
+  },
+  async getTasks() {
+    return [
+      { id: 1, userId: 1, title: 'Read the documentation', isDone: true },
+      { id: 2, userId: 1, title: 'Create awesome application', isDone: false },
+      { id: 3, userId: 2, title: 'Star MobX repository', isDone: false }
+    ];
+  }
 };
 
 describe('TaskStore', () => {
   it('is empty by default', () => {
-    const taskStore = createTaskStore();
+    const taskStore = new TaskStore(taskApiMock);
     expect(taskStore.users).toHaveLength(0);
     expect(taskStore.tasks).toHaveLength(0);
-    const usersWithTasks = taskStore.usersWithTasks;
-    expect(usersWithTasks).toHaveLength(0);
+    expect(taskStore.usersWithTasks).toHaveLength(0);
   });
 
-  it('calculates completed/total task count', (done) => {
-    const taskStore = createTaskStore();
+  it('calculates completed/total task count', done => {
+    const taskStore = new TaskStore(taskApiMock);
     taskStore.load();
     expect(taskStore.usersLoading).toBe(true);
     expect(taskStore.tasksLoading).toBe(true);
@@ -44,6 +55,23 @@ describe('TaskStore', () => {
         taskStore.toggleDone(1);
         // User 2 now has no completed tasks
         expect(taskStore.usersWithTasks[1].taskCompleted).toBe(0);
+        done();
+      }
+    );
+  });
+
+  it('removes related tasks after removing user', done => {
+    const taskStore = new TaskStore(taskApiMock);
+    taskStore.load();
+
+    when(
+      () => !taskStore.usersLoading && !taskStore.tasksLoading,
+      () => {
+        const initialUserCount = taskStore.usersWithTasks.length;
+        taskStore.removeUser(1);
+        expect(taskStore.users.length).toBe(2);
+        expect(taskStore.tasks.length).toBe(1);
+        expect(taskStore.usersWithTasks).toHaveLength(initialUserCount - 1);
         done();
       }
     );
