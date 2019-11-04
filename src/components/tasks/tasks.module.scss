@@ -27,6 +27,11 @@
     justify-content: space-between;
     border-top: 1px solid var(--c-divider);
 
+    .skeleton {
+      padding: 12px 24px 12px 24px;
+      width: 100%;
+    }
+
     .taskInfo {
       display: flex;
       align-items: center;
