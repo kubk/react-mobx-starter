@@ -1,8 +1,10 @@
-import { action, computed, observable } from 'mobx';
-import { Task, TaskApi, User } from './task-api';
+import { action, computed, observable, runInAction } from 'mobx';
+import { Task, TaskApi, User } from '../api/task-api';
+import remotedev from 'mobx-remotedev';
 
 type UsersWithTasks = Array<User & { taskTotal: number; taskCompleted: number }>;
 
+@remotedev({ global: true })
 export class TaskStore {
   @observable usersLoading = false;
   @observable users: User[] = [];
@@ -11,23 +13,21 @@ export class TaskStore {
 
   constructor(private tasksApi: TaskApi) {}
 
-  @action load(): void {
+  @action async load() {
     this.tasksLoading = true;
     this.usersLoading = true;
 
-    this.tasksApi.getTasks().then(
-      action((tasks: Task[]) => {
-        this.tasks = tasks;
-        this.tasksLoading = false;
-      })
-    );
+    const tasks = await this.tasksApi.getTasks();
+    runInAction('getTasks', () => {
+      this.tasks = tasks;
+      this.tasksLoading = false;
+    });
 
-    this.tasksApi.getUsers().then(
-      action((users: User[]) => {
-        this.users = users;
-        this.usersLoading = false;
-      })
-    );
+    const users = await this.tasksApi.getUsers();
+    runInAction('getUsers', () => {
+      this.users = users;
+      this.usersLoading = false;
+    });
   }
 
   @action addUser(name: string): void {
@@ -74,7 +74,7 @@ export class TaskStore {
     });
   }
 
-  editTask<Key extends keyof Task>(id: number, key: Key, value: Task[Key]): void {
+  @action editTask<Key extends keyof Task>(id: number, key: Key, value: Task[Key]): void {
     const task = this.tasks.find(task => task.id === id);
     if (task) {
       task[key] = value;

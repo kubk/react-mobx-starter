@@ -1,6 +1,6 @@
 import React from 'react';
-import { User } from '../../store/task-api';
-import { observer } from 'mobx-react';
+import { User } from '../../api/task-api';
+import { observer } from 'mobx-react-lite';
 
 type Props = {
   value: string | number;

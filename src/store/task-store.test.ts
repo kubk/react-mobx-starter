@@ -1,5 +1,5 @@
 import { TaskStore } from './task-store';
-import { Task, TaskApi, User } from './task-api';
+import { TaskApi } from '../api/task-api';
 import { when } from 'mobx';
 
 const taskApiMock: TaskApi = {

@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './tasks.module.scss';
-import { observer } from 'mobx-react';
+import { observer } from 'mobx-react-lite';
 import { useStore } from '../../store';
 import { Button } from '../button/button';
 import trash from '../../icons/trash.svg';

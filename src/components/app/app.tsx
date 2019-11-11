@@ -1,19 +1,15 @@
 import React from 'react';
 import { hot } from 'react-hot-loader/root';
-import { RouterView, ViewMap } from 'mobx-state-router';
-import { ExtendedRoute, routes } from '../../routes';
-import { useStore } from '../../store';
-
-const createViewMap = (routes: ExtendedRoute[]): ViewMap => {
-  return routes.reduce<ViewMap>((viewMap, route) => {
-    viewMap[route.name] = route.component;
-    return viewMap;
-  }, {});
-};
+import { Main } from '../main/main';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 export const App = hot(() => {
-  const { routerStore } = useStore();
-  const viewMap = createViewMap(routes);
-
-  return <RouterView routerStore={routerStore} viewMap={viewMap} />;
+  return (
+    <BrowserRouter>
+      <Switch>
+        <Route path={'/'} exact component={Main} />
+        <Route path={'/about'} component={() => <h1>About</h1>} />
+      </Switch>
+    </BrowserRouter>
+  );
 });

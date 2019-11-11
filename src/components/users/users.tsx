@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './users.module.scss';
-import { observer } from 'mobx-react';
+import { observer } from 'mobx-react-lite';
 import { Button } from '../button/button';
 import trashSvg from '../../icons/trash.svg';
 import { useStore } from '../../store';

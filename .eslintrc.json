@@ -1,0 +1,9 @@
+{
+  "extends": ["react-app"],
+  "plugins": ["mobx-computed-getters"],
+  "rules": {
+    "getter-return": "warn",
+    "mobx-computed-getters/computed-getters": "error"
+  }
+}
+
