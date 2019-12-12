@@ -1,10 +1,9 @@
-import { action, computed, observable, runInAction } from 'mobx';
+import { action, computed, observable } from 'mobx';
 import { Task, TaskApi, User } from '../api/task-api';
-import remotedev from 'mobx-remotedev';
+import { assert } from './assert';
 
 type UsersWithTasks = Array<User & { taskTotal: number; taskCompleted: number }>;
 
-@remotedev({ global: true })
 export class TaskStore {
   @observable usersLoading = false;
   @observable users: User[] = [];
@@ -13,21 +12,23 @@ export class TaskStore {
 
   constructor(private tasksApi: TaskApi) {}
 
-  @action async load() {
+  @action load() {
     this.tasksLoading = true;
     this.usersLoading = true;
 
-    const tasks = await this.tasksApi.getTasks();
-    runInAction('getTasks', () => {
-      this.tasks = tasks;
-      this.tasksLoading = false;
-    });
+    this.tasksApi.getTasks().then(
+      action('getTasks', (tasks: Task[]) => {
+        this.tasks = tasks;
+        this.tasksLoading = false;
+      })
+    );
 
-    const users = await this.tasksApi.getUsers();
-    runInAction('getUsers', () => {
-      this.users = users;
-      this.usersLoading = false;
-    });
+    this.tasksApi.getUsers().then(
+      action('getUsers', (users: User[]) => {
+        this.users = users;
+        this.usersLoading = false;
+      })
+    );
   }
 
   @action addUser(name: string): void {
@@ -44,16 +45,13 @@ export class TaskStore {
 
   @action editUser<Key extends keyof User>(id: number, key: Key, value: User[Key]): void {
     const user = this.users.find(user => user.id === id);
-    if (user) {
-      user[key] = value;
-    }
+    assert(user, `User ${id} not found`);
+    user[key] = value;
   }
 
   @action assign(todoId: number, userId: number | null): void {
     const todo = this.tasks.find(task => task.id === todoId);
-    if (!todo) {
-      throw new Error('Invalid todo ID');
-    }
+    assert(todo, `Task ${todoId} not found`);
     todo.userId = userId;
   }
 
@@ -76,19 +74,17 @@ export class TaskStore {
 
   @action editTask<Key extends keyof Task>(id: number, key: Key, value: Task[Key]): void {
     const task = this.tasks.find(task => task.id === id);
-    if (task) {
-      task[key] = value;
-    }
+    assert(task, `Task ${id} not found`);
+    task[key] = value;
   }
 
-  @action toggleDone(taskId: number): void {
-    const task = this.tasks.find(task => task.id === taskId);
-    if (task) {
-      task.isDone = !task.isDone;
-    }
+  @action toggleDone(id: number): void {
+    const task = this.tasks.find(task => task.id === id);
+    assert(task, `Task ${id} not found`);
+    task.isDone = !task.isDone;
   }
 
-  @action removeTask(taskId: number): void {
-    this.tasks = this.tasks.filter(task => task.id !== taskId);
+  @action removeTask(id: number): void {
+    this.tasks = this.tasks.filter(task => task.id !== id);
   }
 }

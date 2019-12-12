@@ -4,7 +4,7 @@ import './css/index.css';
 import { App } from './components/app/app';
 import { RootStore } from './store/root-store';
 import { configure } from 'mobx';
-import { StoreContext } from './store';
+import { StoreContext } from './hooks/use-store';
 
 configure({ enforceActions: 'always' });
 

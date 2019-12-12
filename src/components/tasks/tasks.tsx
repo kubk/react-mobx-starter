@@ -1,19 +1,19 @@
 import React from 'react';
 import styles from './tasks.module.scss';
 import { observer } from 'mobx-react-lite';
-import { useStore } from '../../store';
+import { useStore } from '../../hooks/use-store';
 import { Button } from '../button/button';
 import trash from '../../icons/trash.svg';
 import cn from 'classnames';
 import Skeleton from 'react-loading-skeleton';
 import { AssigneeSelector } from '../assignee-selector/assignee-selector';
-import { useInputFocus } from '../../hooks/use-input-focus';
+import { useFocus } from '../../hooks/use-focus';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import { CheckCircle } from '../../icons/check-circle';
 
 export const Tasks = observer(() => {
   const { taskStore } = useStore();
-  const { rememberInput, focusOnInput } = useInputFocus();
+  const { rememberElement, focusElement } = useFocus<HTMLInputElement>();
 
   return (
     <div className={styles.container}>
@@ -22,7 +22,7 @@ export const Tasks = observer(() => {
         <Button
           onClick={() => {
             taskStore.addTask('');
-            focusOnInput();
+            focusElement();
           }}
         >
           Add task
@@ -58,7 +58,7 @@ export const Tasks = observer(() => {
                     value={task.title}
                     ref={input => {
                       if (i === 0) {
-                        rememberInput(input);
+                        rememberElement(input);
                       }
                     }}
                     placeholder="Type in the title of the task!"

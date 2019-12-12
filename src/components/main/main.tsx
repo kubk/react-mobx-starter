@@ -3,7 +3,7 @@ import styles from './main.module.scss';
 import { Users } from '../users/users';
 import { Tasks } from '../tasks/tasks';
 import { observer } from 'mobx-react-lite';
-import { useStore } from '../../store';
+import { useStore } from '../../hooks/use-store';
 
 export const Main = observer(() => {
   const { taskStore } = useStore();

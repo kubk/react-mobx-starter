@@ -3,14 +3,14 @@ import styles from './users.module.scss';
 import { observer } from 'mobx-react-lite';
 import { Button } from '../button/button';
 import trashSvg from '../../icons/trash.svg';
-import { useStore } from '../../store';
-import { useInputFocus } from '../../hooks/use-input-focus';
+import { useStore } from '../../hooks/use-store';
+import { useFocus } from '../../hooks/use-focus';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import Skeleton from 'react-loading-skeleton';
 
 export const Users = observer(() => {
   const { taskStore } = useStore();
-  const { rememberInput, focusOnInput } = useInputFocus();
+  const { rememberElement, focusElement } = useFocus<HTMLInputElement>();
 
   return (
     <div className={styles.usersWrapper}>
@@ -20,7 +20,7 @@ export const Users = observer(() => {
           <Button
             onClick={() => {
               taskStore.addUser('');
-              focusOnInput();
+              focusElement();
             }}
           >
             Add user
@@ -47,7 +47,7 @@ export const Users = observer(() => {
                   <input
                     ref={input => {
                       if (i === 0) {
-                        rememberInput(input);
+                        rememberElement(input);
                       }
                     }}
                     className={styles.input}
