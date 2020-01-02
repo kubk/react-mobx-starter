@@ -17,14 +17,14 @@ export class TaskStore {
     this.usersLoading = true;
 
     this.tasksApi.getTasks().then(
-      action('getTasks', (tasks: Task[]) => {
+      action('getTasks', tasks => {
         this.tasks = tasks;
         this.tasksLoading = false;
       })
     );
 
     this.tasksApi.getUsers().then(
-      action('getUsers', (users: User[]) => {
+      action('getUsers', users => {
         this.users = users;
         this.usersLoading = false;
       })
