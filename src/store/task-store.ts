@@ -1,6 +1,7 @@
 import { action, computed, observable } from 'mobx';
 import { Task, TaskApi, User } from '../api/task-api';
-import { assert } from './assert';
+import { assert } from '../utils/assert';
+import id from 'nanoid';
 
 type UsersWithTasks = Array<User & { taskTotal: number; taskCompleted: number }>;
 
@@ -33,23 +34,23 @@ export class TaskStore {
 
   @action addUser(name: string): void {
     this.users.unshift({
-      id: this.users.length + 1,
+      id: id(),
       name
     });
   }
 
-  @action removeUser(userId: number): void {
+  @action removeUser(userId: string): void {
     this.users = this.users.filter(user => user.id !== userId);
     this.tasks = this.tasks.filter(task => task.userId !== userId);
   }
 
-  @action editUser<Key extends keyof User>(id: number, key: Key, value: User[Key]): void {
+  @action editUser<Key extends keyof User>(id: string, key: Key, value: User[Key]): void {
     const user = this.users.find(user => user.id === id);
     assert(user, `User ${id} not found`);
     user[key] = value;
   }
 
-  @action assign(todoId: number, userId: number | null): void {
+  @action assign(todoId: string, userId: string | null): void {
     const todo = this.tasks.find(task => task.id === todoId);
     assert(todo, `Task ${todoId} not found`);
     todo.userId = userId;
@@ -65,26 +66,26 @@ export class TaskStore {
 
   @action addTask(title: string): void {
     this.tasks.unshift({
-      id: this.tasks.length + 1,
+      id: id(),
       title,
       isDone: false,
       userId: null
     });
   }
 
-  @action editTask<Key extends keyof Task>(id: number, key: Key, value: Task[Key]): void {
+  @action editTask<Key extends keyof Task>(id: string, key: Key, value: Task[Key]): void {
     const task = this.tasks.find(task => task.id === id);
     assert(task, `Task ${id} not found`);
     task[key] = value;
   }
 
-  @action toggleDone(id: number): void {
+  @action toggleDone(id: string): void {
     const task = this.tasks.find(task => task.id === id);
     assert(task, `Task ${id} not found`);
     task.isDone = !task.isDone;
   }
 
-  @action removeTask(id: number): void {
+  @action removeTask(id: string): void {
     this.tasks = this.tasks.filter(task => task.id !== id);
   }
 }

@@ -5,16 +5,16 @@ import { when } from 'mobx';
 const taskApiMock: TaskApi = {
   async getUsers() {
     return [
-      { id: 1, name: 'John Doe' },
-      { id: 2, name: 'Jane Snow' },
-      { id: 3, name: 'Richard Roe' }
+      { id: '1', name: 'John Doe' },
+      { id: '2', name: 'Jane Snow' },
+      { id: '3', name: 'Richard Roe' }
     ];
   },
   async getTasks() {
     return [
-      { id: 1, userId: 1, title: 'Read the documentation', isDone: true },
-      { id: 2, userId: 1, title: 'Create awesome application', isDone: false },
-      { id: 3, userId: 2, title: 'Star MobX repository', isDone: false }
+      { id: '1', userId: '1', title: 'Read the documentation', isDone: true },
+      { id: '2', userId: '1', title: 'Create awesome application', isDone: false },
+      { id: '3', userId: '2', title: 'Star MobX repository', isDone: false }
     ];
   }
 };
@@ -43,7 +43,7 @@ describe('TaskStore', () => {
     expect(taskStore.usersWithTasks[1].taskTotal).toBe(1);
     expect(taskStore.usersWithTasks[1].taskCompleted).toBe(0);
 
-    taskStore.assign(1, 2);
+    taskStore.assign('1', '2');
     // Completed task 1 removed from user 1
     expect(taskStore.usersWithTasks[0].taskTotal).toBe(1);
     expect(taskStore.usersWithTasks[0].taskCompleted).toBe(0);
@@ -51,7 +51,7 @@ describe('TaskStore', () => {
     expect(taskStore.usersWithTasks[1].taskTotal).toBe(2);
     expect(taskStore.usersWithTasks[1].taskCompleted).toBe(1);
 
-    taskStore.toggleDone(1);
+    taskStore.toggleDone('1');
     // User 2 now has no completed tasks
     expect(taskStore.usersWithTasks[1].taskCompleted).toBe(0);
   });
@@ -63,7 +63,7 @@ describe('TaskStore', () => {
     await when(() => !taskStore.usersLoading && !taskStore.tasksLoading);
 
     const initialUserCount = taskStore.usersWithTasks.length;
-    taskStore.removeUser(1);
+    taskStore.removeUser('1');
     expect(taskStore.users.length).toBe(2);
     expect(taskStore.tasks.length).toBe(1);
     expect(taskStore.usersWithTasks).toHaveLength(initialUserCount - 1);

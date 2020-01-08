@@ -4,7 +4,7 @@ import { observer } from 'mobx-react-lite';
 
 type Props = {
   value: string | number;
-  onSelect: (userId: number | null) => void;
+  onSelect: (userId: string | null) => void;
   users: User[];
 };
 
@@ -13,7 +13,7 @@ export const AssigneeSelector = observer(({ onSelect, users, value }: Props) => 
     <select
       value={value}
       onChange={e => {
-        const userId = Number(e.target.value) || null;
+        const userId = e.target.value || null;
         onSelect(userId);
       }}
     >
