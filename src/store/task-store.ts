@@ -2,9 +2,11 @@ import { action, computed, observable } from 'mobx';
 import { Task, TaskApi, User } from '../api/task-api';
 import { assert } from '../utils/assert';
 import id from 'nanoid';
+import remotedev from 'mobx-remotedev';
 
 type UsersWithTasks = Array<User & { taskTotal: number; taskCompleted: number }>;
 
+@remotedev({ global: true })
 export class TaskStore {
   @observable usersLoading = false;
   @observable users: User[] = [];
@@ -33,10 +35,7 @@ export class TaskStore {
   }
 
   @action addUser(name: string): void {
-    this.users.unshift({
-      id: id(),
-      name
-    });
+    this.users.unshift({ id: id(), name });
   }
 
   @action removeUser(userId: string): void {
