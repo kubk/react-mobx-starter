@@ -53,6 +53,9 @@
       border: 0;
       padding: 12px 24px 12px 0;
       width: 300px;
+      @media (max-width: 768px) {
+        width: 200px;
+      }
       background-color: transparent;
       transition: all 0.3s;
       color: var(--c-black);

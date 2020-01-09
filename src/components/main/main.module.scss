@@ -4,19 +4,44 @@
   padding: 96px 48px 128px;
 }
 
-.container {
-  display: flex;
-  margin: 0 auto;
-  width: 1000px;
-}
-
 .users {
-  padding-right: 48px;
   width: 40%;
 }
 
 .tasks {
   width: 60%;
+}
+
+.container {
+  display: flex;
+
+  @media (min-width: 1200px) {
+    margin: 0 auto;
+    width: 1000px;
+  }
+
+  .users {
+    margin: 0 48px 0 0;
+  }
+
+  @media (max-width: 1200px) {
+    flex-direction: column-reverse;
+    align-items: center;
+
+    .users {
+      width: 60%;
+      margin: 30px 0 0 0;
+    }
+  }
+
+  .tasks, .users {
+    @media (max-width: 992px) {
+      width: 90%;
+    }
+    @media (max-width: 768px) {
+      width: 100%;
+    }
+  }
 }
 
 .header {
@@ -40,7 +65,7 @@
 .description {
   margin: 0 auto;
   padding-bottom: 64px;
-  width: 560px;
+  width: 100%;
   text-align: center;
   color: var(--c-black);
 
