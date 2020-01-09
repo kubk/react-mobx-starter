@@ -1,7 +1,7 @@
 {
   "name": "react-mobx-starter",
   "version": "0.1.0",
-  "homepage": "https://kubk.github.io/react-mobx-starter",
+  "homepage": "https://kubk.github.io",
   "private": true,
   "dependencies": {
     "@types/classnames": "^2.2.9",
