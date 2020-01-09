@@ -1,6 +1,6 @@
 # react-mobx-starter
 
-This project is a boilerplate for a quickstart development React applications. Demo: https://react-mobx-starter-rfnnfku4b.now.sh
+This project is a boilerplate for a quickstart development React applications.
 
 ### 🎁 What’s Inside?
 - Create React App 3 + TypeScript 3.7
