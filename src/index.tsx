@@ -13,7 +13,3 @@ const render = () => (
 
 ReactDOM.render(render(), document.getElementById('root'));
 
-declare const module: any;
-if (module.hot) {
-  module.hot.accept('./store/stores', render);
-}
