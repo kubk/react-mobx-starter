@@ -1,7 +1,8 @@
 import { action, makeAutoObservable } from 'mobx';
 import { Task, TaskApi, User } from '../api/task-api';
-import { assert } from '../utils/assert';
+import { assert } from 'ts-essentials';
 import { nanoid } from 'nanoid';
+import { addToDevtools } from "../lib/mobx/add-to-devtools";
 
 type UsersWithTasks = Array<User & { taskTotal: number; taskCompleted: number }>;
 
@@ -13,6 +14,7 @@ export class TaskStore {
 
   constructor(private tasksApi: TaskApi) {
     makeAutoObservable(this);
+    addToDevtools(this);
   }
 
   load() {
