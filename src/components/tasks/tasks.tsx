@@ -31,7 +31,7 @@ export const Tasks = observer(() => {
 
       {taskStore.usersLoading && (
         <div className={styles.tasks}>
-          {[1, 2, 3].map(i => (
+          {[1, 2, 3].map((i) => (
             <div key={i} className={styles.task}>
               <span className={styles.skeleton}>
                 <Skeleton />
@@ -45,7 +45,10 @@ export const Tasks = observer(() => {
         <TransitionGroup className={styles.tasks}>
           {taskStore.tasks.map((task, i) => (
             <CSSTransition key={task.id} timeout={300} classNames={'item'}>
-              <div key={i} className={cn(styles.task, { [styles.done]: task.isDone })}>
+              <div
+                key={i}
+                className={cn(styles.task, { [styles.done]: task.isDone })}
+              >
                 <span className={styles.taskInfo}>
                   <CheckCircle
                     onClick={() => taskStore.toggleDone(task.id)}
@@ -56,14 +59,14 @@ export const Tasks = observer(() => {
                   <input
                     className={styles.input}
                     value={task.title}
-                    ref={input => {
+                    ref={(input) => {
                       if (i === 0) {
                         rememberElement(input);
                       }
                     }}
-                    placeholder="Type in the title of the task!"
+                    placeholder='Type in the title of the task!'
                     readOnly={task.isDone}
-                    onChange={e => {
+                    onChange={(e) => {
                       taskStore.editTask(task.id, 'title', e.target.value);
                     }}
                   />
@@ -71,7 +74,7 @@ export const Tasks = observer(() => {
 
                 <AssigneeSelector
                   value={task.userId || ''}
-                  onSelect={userId => taskStore.assign(task.id, userId)}
+                  onSelect={(userId) => taskStore.assign(task.id, userId)}
                   users={taskStore.users}
                 />
 

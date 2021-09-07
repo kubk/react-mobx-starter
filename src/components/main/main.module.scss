@@ -32,7 +32,8 @@
     }
   }
 
-  .tasks, .users {
+  .tasks,
+  .users {
     @media (max-width: 992px) {
       width: 90%;
     }

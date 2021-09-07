@@ -12,6 +12,6 @@ export const useFocus = <T extends HTMLElement>() => {
       setTimeout(() => {
         ref.current?.focus();
       });
-    }
+    },
   };
 };

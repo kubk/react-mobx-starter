@@ -12,4 +12,3 @@ const render = () => (
 );
 
 ReactDOM.render(render(), document.getElementById('root'));
-

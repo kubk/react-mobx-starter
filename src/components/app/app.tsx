@@ -1,9 +1,8 @@
 import React from 'react';
-import { hot } from 'react-hot-loader/root';
 import { Main } from '../main/main';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
-export const App = hot(() => {
+export const App = () => {
   return (
     <BrowserRouter>
       <Switch>
@@ -12,4 +11,4 @@ export const App = hot(() => {
       </Switch>
     </BrowserRouter>
   );
-});
+};

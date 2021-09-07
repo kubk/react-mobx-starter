@@ -7,16 +7,21 @@ const taskApiMock: TaskApi = {
     return [
       { id: '1', name: 'John Doe' },
       { id: '2', name: 'Jane Snow' },
-      { id: '3', name: 'Richard Roe' }
+      { id: '3', name: 'Richard Roe' },
     ];
   },
   async getTasks() {
     return [
       { id: '1', userId: '1', title: 'Read the documentation', isDone: true },
-      { id: '2', userId: '1', title: 'Create awesome application', isDone: false },
-      { id: '3', userId: '2', title: 'Star MobX repository', isDone: false }
+      {
+        id: '2',
+        userId: '1',
+        title: 'Create awesome application',
+        isDone: false,
+      },
+      { id: '3', userId: '2', title: 'Star MobX repository', isDone: false },
     ];
-  }
+  },
 };
 
 describe('TaskStore', () => {

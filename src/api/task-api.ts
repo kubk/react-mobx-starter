@@ -11,7 +11,7 @@ export interface Task {
 }
 
 const sleep = (ms: number) => {
-  return new Promise(resolve => setTimeout(resolve, ms));
+  return new Promise((resolve) => setTimeout(resolve, ms));
 };
 
 export class TaskApi {
@@ -20,7 +20,7 @@ export class TaskApi {
     return [
       { id: '1', name: 'John Doe' },
       { id: '2', name: 'Jane Snow' },
-      { id: '3', name: 'Richard Roe' }
+      { id: '3', name: 'Richard Roe' },
     ];
   }
 
@@ -31,20 +31,20 @@ export class TaskApi {
         id: '1',
         userId: '1',
         title: 'Create awesome application!',
-        isDone: true
+        isDone: true,
       },
       {
         id: '2',
         userId: '1',
         title: 'Read the documentation',
-        isDone: false
+        isDone: false,
       },
       {
         id: '3',
         userId: '2',
         title: 'Star MobX repository',
-        isDone: false
-      }
+        isDone: false,
+      },
     ];
   }
 }

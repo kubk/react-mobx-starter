@@ -8,21 +8,23 @@ type Props = {
   users: User[];
 };
 
-export const AssigneeSelector = observer(({ onSelect, users, value }: Props) => {
-  return (
-    <select
-      value={value}
-      onChange={e => {
-        const userId = e.target.value || null;
-        onSelect(userId);
-      }}
-    >
-      <option value="">No assignee</option>
-      {users.map((user, i) => (
-        <option key={i} value={user.id}>
-          {user.name}
-        </option>
-      ))}
-    </select>
-  );
-});
+export const AssigneeSelector = observer(
+  ({ onSelect, users, value }: Props) => {
+    return (
+      <select
+        value={value}
+        onChange={(e) => {
+          const userId = e.target.value || null;
+          onSelect(userId);
+        }}
+      >
+        <option value=''>No assignee</option>
+        {users.map((user, i) => (
+          <option key={i} value={user.id}>
+            {user.name}
+          </option>
+        ))}
+      </select>
+    );
+  }
+);

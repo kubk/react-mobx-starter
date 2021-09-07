@@ -2,9 +2,11 @@ import { action, makeAutoObservable } from 'mobx';
 import { Task, TaskApi, User } from '../api/task-api';
 import { assert } from 'ts-essentials';
 import { nanoid } from 'nanoid';
-import { addToDevtools } from "../lib/mobx/add-to-devtools";
+import { addToDevtools } from '../lib/mobx/add-to-devtools';
 
-type UsersWithTasks = Array<User & { taskTotal: number; taskCompleted: number }>;
+type UsersWithTasks = Array<
+  User & { taskTotal: number; taskCompleted: number }
+>;
 
 export class TaskStore {
   usersLoading = false;
@@ -22,14 +24,14 @@ export class TaskStore {
     this.usersLoading = true;
 
     this.tasksApi.getTasks().then(
-      action((tasks: Task[]) => {
+      action((tasks) => {
         this.tasks = tasks;
         this.tasksLoading = false;
       })
     );
 
     this.tasksApi.getUsers().then(
-      action((users: User[]) => {
+      action((users) => {
         this.users = users;
         this.usersLoading = false;
       })
@@ -45,7 +47,11 @@ export class TaskStore {
     this.tasks = this.tasks.filter((task) => task.userId !== userId);
   }
 
-  editUser<Key extends keyof User>(id: string, key: Key, value: User[Key]): void {
+  editUser<Key extends keyof User>(
+    id: string,
+    key: Key,
+    value: User[Key]
+  ): void {
     const user = this.users.find((user) => user.id === id);
     assert(user, `User ${id} not found`);
     user[key] = value;
@@ -61,11 +67,13 @@ export class TaskStore {
     return this.users.map((user) => ({
       ...user,
       taskTotal: this.tasks.filter((todo) => todo.userId === user.id).length,
-      taskCompleted: this.tasks.filter((todo) => todo.userId === user.id && todo.isDone).length,
+      taskCompleted: this.tasks.filter(
+        (todo) => todo.userId === user.id && todo.isDone
+      ).length,
     }));
   }
 
-  addTask(title: string): void {
+  addTask(title: string) {
     this.tasks.unshift({
       id: nanoid(),
       title,
@@ -74,19 +82,23 @@ export class TaskStore {
     });
   }
 
-  editTask<Key extends keyof Task>(id: string, key: Key, value: Task[Key]): void {
+  editTask<Key extends keyof Task>(
+    id: string,
+    key: Key,
+    value: Task[Key]
+  ): void {
     const task = this.tasks.find((task) => task.id === id);
     assert(task, `Task ${id} not found`);
     task[key] = value;
   }
 
-  toggleDone(id: string): void {
+  toggleDone(id: string) {
     const task = this.tasks.find((task) => task.id === id);
     assert(task, `Task ${id} not found`);
     task.isDone = !task.isDone;
   }
 
-  removeTask(id: string): void {
+  removeTask(id: string) {
     this.tasks = this.tasks.filter((task) => task.id !== id);
   }
 }
