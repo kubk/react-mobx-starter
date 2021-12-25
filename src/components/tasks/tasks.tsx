@@ -43,50 +43,54 @@ export const Tasks = observer(() => {
 
       {!taskStore.usersLoading && (
         <TransitionGroup className={styles.tasks}>
-          {taskStore.tasks.map((task, i) => (
-            <CSSTransition key={task.id} timeout={300} classNames={'item'}>
-              <div
-                key={i}
-                className={cn(styles.task, { [styles.done]: task.isDone })}
-              >
-                <span className={styles.taskInfo}>
-                  <CheckCircle
-                    onClick={() => taskStore.toggleDone(task.id)}
-                    className={styles.icon}
-                    fill={task.isDone ? 'var(--c-teal)' : 'var(--c-black)'}
+          {taskStore.tasks.map((task, i) => {
+            const { form } = task;
+            return (
+              <CSSTransition key={task.id} timeout={300} classNames={'item'}>
+                <div
+                  key={i}
+                  className={cn(styles.task, {
+                    [styles.done]: form.isDone.checked,
+                  })}
+                >
+                  <span className={styles.taskInfo}>
+                    <CheckCircle
+                      onClick={form.isDone.toggle}
+                      className={styles.icon}
+                      fill={form.isDone.checked ? 'var(--c-teal)' : 'var(--c-black)'}
+                    />
+
+                    <input
+                      className={styles.input}
+                      ref={(input) => {
+                        if (i === 0) {
+                          rememberElement(input);
+                        }
+                      }}
+                      placeholder="Type in the title of the task!"
+                      readOnly={form.isDone.checked}
+                      {...form.title.toInput}
+                    />
+                  </span>
+
+                  <AssigneeSelector
+                    users={taskStore.users.map((user) => ({
+                      id: user.id,
+                      name: user.form.name.value,
+                    }))}
+                    {...form.userId.toInput}
                   />
 
-                  <input
-                    className={styles.input}
-                    value={task.title}
-                    ref={(input) => {
-                      if (i === 0) {
-                        rememberElement(input);
-                      }
-                    }}
-                    placeholder='Type in the title of the task!'
-                    readOnly={task.isDone}
-                    onChange={(e) => {
-                      taskStore.editTask(task.id, 'title', e.target.value);
-                    }}
+                  <img
+                    src={trash}
+                    alt={'remove task'}
+                    className={styles.trash}
+                    onClick={() => taskStore.removeTask(task.id)}
                   />
-                </span>
-
-                <AssigneeSelector
-                  value={task.userId || ''}
-                  onSelect={(userId) => taskStore.assign(task.id, userId)}
-                  users={taskStore.users}
-                />
-
-                <img
-                  src={trash}
-                  alt={'remove task'}
-                  className={styles.trash}
-                  onClick={() => taskStore.removeTask(task.id)}
-                />
-              </div>
-            </CSSTransition>
-          ))}
+                </div>
+              </CSSTransition>
+            );
+          })}
         </TransitionGroup>
       )}
     </div>

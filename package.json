@@ -15,7 +15,7 @@
     "classnames": "^2.3.1",
     "gh-pages": "^3.2.3",
     "mobx": "^6.3.3",
-    "mobx-log": "^0.4.0",
+    "mobx-log": "^0.8.6",
     "mobx-react-lite": "^3.2.1",
     "mobx-utils": "^6.0.4",
     "nanoid": "^3.1.25",
@@ -34,7 +34,6 @@
     "typescript": "^4.4.2"
   },
   "scripts": {
-    "cs": "./node_modules/.bin/prettier src/**/*.{ts,tsx,js,jsx,scss} --write --single-quote --jsx-single-quote",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
     "start": "react-scripts start",

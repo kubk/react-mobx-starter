@@ -1,18 +1,24 @@
 import { action, makeAutoObservable } from 'mobx';
-import { Task, TaskApi, User } from '../api/task-api';
-import { assert } from 'ts-essentials';
+import { TaskApi } from '../api/task-api';
 import { nanoid } from 'nanoid';
 import { makeLoggable } from 'mobx-log';
+import { CheckboxInput, TextInput } from './mobx-form';
 
-type UsersWithTasks = Array<
-  User & { taskTotal: number; taskCompleted: number }
->;
+type UserForm = {
+  name: TextInput;
+};
+
+type TaskForm = {
+  title: TextInput;
+  isDone: CheckboxInput;
+  userId: TextInput;
+};
 
 export class TaskStore {
   usersLoading = false;
-  users: User[] = [];
+  users: Array<{ id: string; form: UserForm }> = [];
   tasksLoading = false;
-  tasks: Task[] = [];
+  tasks: Array<{ id: string; form: TaskForm }> = [];
 
   constructor(private tasksApi: TaskApi) {
     makeAutoObservable(this);
@@ -23,52 +29,53 @@ export class TaskStore {
     this.tasksLoading = true;
     this.usersLoading = true;
 
-    this.tasksApi.getTasks().then(
-      action((tasks) => {
-        this.tasks = tasks;
-        this.tasksLoading = false;
-      })
-    );
+    this.tasksApi
+      .getTasks()
+      .then(
+        action((tasks) => {
+          this.tasks = tasks.map((task) => ({
+            id: task.id,
+            form: {
+              title: new TextInput(task.title),
+              isDone: new CheckboxInput(task.isDone),
+              userId: new TextInput(task.userId || ''),
+            },
+          }));
+        })
+      )
+      .finally(action(() => (this.tasksLoading = false)));
 
-    this.tasksApi.getUsers().then(
-      action((users) => {
-        this.users = users;
-        this.usersLoading = false;
-      })
-    );
+    this.tasksApi
+      .getUsers()
+      .then(
+        action((users) => {
+          this.users = users.map((user) => ({
+            id: user.id,
+            form: {
+              name: new TextInput(user.name),
+            },
+          }));
+        })
+      )
+      .finally(action(() => (this.usersLoading = false)));
   }
 
-  addUser(name: string): void {
-    this.users.unshift({ id: nanoid(), name });
+  addUser(name: string) {
+    this.users.unshift({ id: nanoid(), form: { name: new TextInput(name) } });
   }
 
-  removeUser(userId: string): void {
+  removeUser(userId: string) {
     this.users = this.users.filter((user) => user.id !== userId);
-    this.tasks = this.tasks.filter((task) => task.userId !== userId);
+    this.tasks = this.tasks.filter((task) => task.form.userId.value !== userId);
   }
 
-  editUser<Key extends keyof User>(
-    id: string,
-    key: Key,
-    value: User[Key]
-  ): void {
-    const user = this.users.find((user) => user.id === id);
-    assert(user, `User ${id} not found`);
-    user[key] = value;
-  }
-
-  assign(todoId: string, userId: string | null): void {
-    const todo = this.tasks.find((task) => task.id === todoId);
-    assert(todo, `Task ${todoId} not found`);
-    todo.userId = userId;
-  }
-
-  get usersWithTasks(): UsersWithTasks {
+  get usersWithTasks() {
     return this.users.map((user) => ({
-      ...user,
-      taskTotal: this.tasks.filter((todo) => todo.userId === user.id).length,
+      id: user.id,
+      form: user.form,
+      taskTotal: this.tasks.filter((todo) => todo.form.userId.value === user.id).length,
       taskCompleted: this.tasks.filter(
-        (todo) => todo.userId === user.id && todo.isDone
+        (todo) => todo.form.userId.value === user.id && todo.form.isDone.checked
       ).length,
     }));
   }
@@ -76,26 +83,12 @@ export class TaskStore {
   addTask(title: string) {
     this.tasks.unshift({
       id: nanoid(),
-      title,
-      isDone: false,
-      userId: null,
+      form: {
+        title: new TextInput(title),
+        isDone: new CheckboxInput(false),
+        userId: new TextInput(''),
+      },
     });
-  }
-
-  editTask<Key extends keyof Task>(
-    id: string,
-    key: Key,
-    value: Task[Key]
-  ): void {
-    const task = this.tasks.find((task) => task.id === id);
-    assert(task, `Task ${id} not found`);
-    task[key] = value;
-  }
-
-  toggleDone(id: string) {
-    const task = this.tasks.find((task) => task.id === id);
-    assert(task, `Task ${id} not found`);
-    task.isDone = !task.isDone;
   }
 
   removeTask(id: string) {

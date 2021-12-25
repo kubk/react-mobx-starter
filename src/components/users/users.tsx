@@ -42,7 +42,7 @@ export const Users = observer(() => {
         {!taskStore.usersLoading && (
           <TransitionGroup className={styles.users}>
             {taskStore.usersWithTasks.map((user, i) => (
-              <CSSTransition key={user.id} timeout={300} classNames='item'>
+              <CSSTransition key={user.id} timeout={300} classNames="item">
                 <div className={styles.user} key={i}>
                   <input
                     ref={(input) => {
@@ -51,16 +51,11 @@ export const Users = observer(() => {
                       }
                     }}
                     className={styles.input}
-                    value={user.name}
+                    {...user.form.name.toInput}
                     placeholder="Type in user's name!"
-                    onChange={(event) => {
-                      taskStore.editUser(user.id, 'name', event.target.value);
-                    }}
                   />
 
-                  <p className={styles.taskCompleted}>
-                    Completed {user.taskCompleted}
-                  </p>
+                  <p className={styles.taskCompleted}>Completed {user.taskCompleted}</p>
                   <p className={styles.taskCount}>Total {user.taskTotal}</p>
 
                   <img

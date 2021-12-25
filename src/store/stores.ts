@@ -4,7 +4,7 @@ import { configureMakeLoggable } from 'mobx-log';
 
 configureMakeLoggable({
   storeConsoleAccess: true,
-})
+});
 
 export const stores = {
   taskStore: new TaskStore(new TaskApi()),
