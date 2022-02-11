@@ -19,7 +19,7 @@
     "mobx-react-lite": "^3.2.1",
     "mobx-utils": "^6.0.4",
     "nanoid": "^3.1.25",
-    "node-sass": "^6.0.1",
+    "node-sass": "^7.0.0",
     "normalize.css": "^8.0.1",
     "npm-check-updates": "^11.8.5",
     "prettier": "^2.3.2",
