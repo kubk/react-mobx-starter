@@ -1,10 +1,8 @@
 import { TaskStore } from './task-store';
 import { TaskApi } from '../api/task-api';
-import { configureMakeLoggable } from 'mobx-log';
+import { configureDevtools } from 'mobx-log';
 
-configureMakeLoggable({
-  storeConsoleAccess: true,
-});
+configureDevtools()
 
 export const stores = {
   taskStore: new TaskStore(new TaskApi()),
