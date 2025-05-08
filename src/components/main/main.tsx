@@ -1,13 +1,11 @@
-import React, { useEffect } from 'react';
-import styles from './main.module.scss';
-import { Users } from '../users/users';
-import { Tasks } from '../tasks/tasks';
-import { observer } from 'mobx-react-lite';
-import { useStore } from '../../hooks/use-store';
+import { useEffect } from "react";
+import styles from "./main.module.scss";
+import { Users } from "../users/users";
+import { Tasks } from "../tasks/tasks";
+import { observer } from "mobx-react-lite";
+import { taskStore } from "../../store/task-store";
 
 export const Main = observer(() => {
-  const { taskStore } = useStore();
-
   useEffect(() => {
     taskStore.load();
   }, [taskStore]);

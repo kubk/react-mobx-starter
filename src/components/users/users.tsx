@@ -1,15 +1,13 @@
-import React from 'react';
-import styles from './users.module.scss';
-import { observer } from 'mobx-react-lite';
-import { Button } from '../button/button';
-import trashSvg from '../../icons/trash.svg';
-import { useStore } from '../../hooks/use-store';
-import { useFocus } from '../../hooks/use-focus';
-import { CSSTransition, TransitionGroup } from 'react-transition-group';
-import Skeleton from 'react-loading-skeleton';
+import styles from "./users.module.scss";
+import { observer } from "mobx-react-lite";
+import { Button } from "../button/button";
+import trashSvg from "../../icons/trash.svg";
+import { useFocus } from "../../hooks/use-focus";
+import { CSSTransition, TransitionGroup } from "react-transition-group";
+import Skeleton from "react-loading-skeleton";
+import { taskStore } from "../../store/task-store";
 
 export const Users = observer(() => {
-  const { taskStore } = useStore();
   const { rememberElement, focusElement } = useFocus<HTMLInputElement>();
 
   return (
@@ -19,7 +17,7 @@ export const Users = observer(() => {
           <h2 className={styles.title}>Users</h2>
           <Button
             onClick={() => {
-              taskStore.addUser('');
+              taskStore.addUser("");
               focusElement();
             }}
           >
@@ -55,12 +53,14 @@ export const Users = observer(() => {
                     placeholder="Type in user's name!"
                   />
 
-                  <p className={styles.taskCompleted}>Completed {user.taskCompleted}</p>
+                  <p className={styles.taskCompleted}>
+                    Completed {user.taskCompleted}
+                  </p>
                   <p className={styles.taskCount}>Total {user.taskTotal}</p>
 
                   <img
                     src={trashSvg}
-                    alt={'Remove task'}
+                    alt={"Remove task"}
                     className={styles.trash}
                     onClick={() => taskStore.removeUser(user.id)}
                   />

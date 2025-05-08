@@ -1,7 +1,7 @@
-import { makeAutoObservable } from 'mobx';
+import { makeAutoObservable } from "mobx";
 
 export class TextInput {
-  constructor(public value = '') {
+  constructor(public value = "") {
     makeAutoObservable(this);
   }
 

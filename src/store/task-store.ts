@@ -1,8 +1,8 @@
-import { action, makeAutoObservable } from 'mobx';
-import { TaskApi } from '../api/task-api';
-import { nanoid } from 'nanoid';
-import { makeLoggable } from 'mobx-log';
-import { CheckboxInput, TextInput } from './mobx-form';
+import { action, makeAutoObservable } from "mobx";
+import { makeLoggable } from "mobx-log";
+import { CheckboxInput, TextInput } from "./mobx-form";
+import { api } from "../api/api";
+import { v4 } from "uuid";
 
 type UserForm = {
   name: TextInput;
@@ -20,7 +20,7 @@ export class TaskStore {
   tasksLoading = false;
   tasks: Array<{ id: string; form: TaskForm }> = [];
 
-  constructor(private tasksApi: TaskApi) {
+  constructor() {
     makeAutoObservable(this);
     makeLoggable(this);
   }
@@ -29,7 +29,7 @@ export class TaskStore {
     this.tasksLoading = true;
     this.usersLoading = true;
 
-    this.tasksApi
+    api
       .getTasks()
       .then(
         action((tasks) => {
@@ -38,14 +38,14 @@ export class TaskStore {
             form: {
               title: new TextInput(task.title),
               isDone: new CheckboxInput(task.isDone),
-              userId: new TextInput(task.userId || ''),
+              userId: new TextInput(task.userId || ""),
             },
           }));
-        })
+        }),
       )
       .finally(action(() => (this.tasksLoading = false)));
 
-    this.tasksApi
+    api
       .getUsers()
       .then(
         action((users) => {
@@ -55,13 +55,16 @@ export class TaskStore {
               name: new TextInput(user.name),
             },
           }));
-        })
+        }),
       )
       .finally(action(() => (this.usersLoading = false)));
   }
 
   addUser(name: string) {
-    this.users.unshift({ id: nanoid(), form: { name: new TextInput(name) } });
+    this.users.unshift({
+      id: v4(),
+      form: { name: new TextInput(name) },
+    });
   }
 
   removeUser(userId: string) {
@@ -73,20 +76,22 @@ export class TaskStore {
     return this.users.map((user) => ({
       id: user.id,
       form: user.form,
-      taskTotal: this.tasks.filter((todo) => todo.form.userId.value === user.id).length,
+      taskTotal: this.tasks.filter((todo) => todo.form.userId.value === user.id)
+        .length,
       taskCompleted: this.tasks.filter(
-        (todo) => todo.form.userId.value === user.id && todo.form.isDone.checked
+        (todo) =>
+          todo.form.userId.value === user.id && todo.form.isDone.checked,
       ).length,
     }));
   }
 
   addTask(title: string) {
     this.tasks.unshift({
-      id: nanoid(),
+      id: v4(),
       form: {
         title: new TextInput(title),
         isDone: new CheckboxInput(false),
-        userId: new TextInput(''),
+        userId: new TextInput(""),
       },
     });
   }
@@ -95,3 +100,5 @@ export class TaskStore {
     this.tasks = this.tasks.filter((task) => task.id !== id);
   }
 }
+
+export const taskStore = new TaskStore();

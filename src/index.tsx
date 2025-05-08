@@ -1,14 +1,9 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './css/index.css';
-import { App } from './components/app/app';
-import { StoreContext } from './hooks/use-store';
-import { stores } from './store/stores';
+import { createRoot } from "react-dom/client";
+import "./css/index.css";
+import { Main } from "./components/main/main";
 
-const render = () => (
-  <StoreContext.Provider value={stores}>
-    <App />
-  </StoreContext.Provider>
-);
+const container = document.getElementById("root");
+if (!container) throw new Error("Failed to find the root element");
 
-ReactDOM.render(render(), document.getElementById('root'));
+const root = createRoot(container);
+root.render(<Main />);

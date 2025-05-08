@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef } from "react";
 
 export const useFocus = <T extends HTMLElement>() => {
   const ref = useRef<T | null>(null);

@@ -1,18 +1,16 @@
-import React from 'react';
-import styles from './tasks.module.scss';
-import { observer } from 'mobx-react-lite';
-import { useStore } from '../../hooks/use-store';
-import { Button } from '../button/button';
-import trash from '../../icons/trash.svg';
-import cn from 'classnames';
-import Skeleton from 'react-loading-skeleton';
-import { AssigneeSelector } from '../assignee-selector/assignee-selector';
-import { useFocus } from '../../hooks/use-focus';
-import { CSSTransition, TransitionGroup } from 'react-transition-group';
-import { CheckCircle } from '../../icons/check-circle';
+import styles from "./tasks.module.scss";
+import { observer } from "mobx-react-lite";
+import { Button } from "../button/button";
+import trash from "../../icons/trash.svg";
+import cn from "classnames";
+import Skeleton from "react-loading-skeleton";
+import { AssigneeSelector } from "../assignee-selector/assignee-selector";
+import { useFocus } from "../../hooks/use-focus";
+import { CSSTransition, TransitionGroup } from "react-transition-group";
+import { CheckCircle } from "../../icons/check-circle";
+import { taskStore } from "../../store/task-store";
 
 export const Tasks = observer(() => {
-  const { taskStore } = useStore();
   const { rememberElement, focusElement } = useFocus<HTMLInputElement>();
 
   return (
@@ -21,7 +19,7 @@ export const Tasks = observer(() => {
         <h2 className={styles.title}>Tasks</h2>
         <Button
           onClick={() => {
-            taskStore.addTask('');
+            taskStore.addTask("");
             focusElement();
           }}
         >
@@ -46,7 +44,7 @@ export const Tasks = observer(() => {
           {taskStore.tasks.map((task, i) => {
             const { form } = task;
             return (
-              <CSSTransition key={task.id} timeout={300} classNames={'item'}>
+              <CSSTransition key={task.id} timeout={300} classNames={"item"}>
                 <div
                   key={i}
                   className={cn(styles.task, {
@@ -57,7 +55,9 @@ export const Tasks = observer(() => {
                     <CheckCircle
                       onClick={form.isDone.toggle}
                       className={styles.icon}
-                      fill={form.isDone.checked ? 'var(--c-teal)' : 'var(--c-black)'}
+                      fill={
+                        form.isDone.checked ? "var(--c-teal)" : "var(--c-black)"
+                      }
                     />
 
                     <input
@@ -83,7 +83,7 @@ export const Tasks = observer(() => {
 
                   <img
                     src={trash}
-                    alt={'remove task'}
+                    alt={"remove task"}
                     className={styles.trash}
                     onClick={() => taskStore.removeTask(task.id)}
                   />
