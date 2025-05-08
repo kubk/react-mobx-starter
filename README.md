@@ -1,6 +1,6 @@
 # react-mobx-starter
 
-This project is a boilerplate for a quickstart development React applications. [Demo](https://react-mobx-starter-rfnnfku4b.now.sh/)
+This project is a boilerplate for a quickstart development React applications. [Demo](https://kubk.github.io/react-mobx-starter)
 
 ### 🎁 What’s Inside?
 - Vite + TypeScript
