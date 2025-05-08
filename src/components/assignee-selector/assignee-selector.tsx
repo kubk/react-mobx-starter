@@ -1,4 +1,3 @@
-import { observer } from "mobx-react-lite";
 import { User } from "../../api/api";
 
 type Props = {
@@ -7,17 +6,15 @@ type Props = {
   users: User[];
 };
 
-export const AssigneeSelector = observer(
-  ({ onChange, users, value }: Props) => {
-    return (
-      <select value={value} onChange={onChange}>
-        <option value="">No assignee</option>
-        {users.map((user, i) => (
-          <option key={i} value={user.id}>
-            {user.name}
-          </option>
-        ))}
-      </select>
-    );
-  },
-);
+export function AssigneeSelector({ onChange, users, value }: Props) {
+  return (
+    <select value={value} onChange={onChange}>
+      <option value="">No assignee</option>
+      {users.map((user, i) => (
+        <option key={i} value={user.id}>
+          {user.name}
+        </option>
+      ))}
+    </select>
+  );
+}

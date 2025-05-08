@@ -1,5 +1,4 @@
 import styles from "./users.module.scss";
-import { observer } from "mobx-react-lite";
 import { Button } from "../button/button";
 import trashSvg from "../../icons/trash.svg";
 import { useFocus } from "../../hooks/use-focus";
@@ -7,7 +6,7 @@ import { CSSTransition, TransitionGroup } from "react-transition-group";
 import Skeleton from "react-loading-skeleton";
 import { taskStore } from "../../store/task-store";
 
-export const Users = observer(() => {
+export function Users() {
   const { rememberElement, focusElement } = useFocus<HTMLInputElement>();
 
   return (
@@ -72,4 +71,4 @@ export const Users = observer(() => {
       </div>
     </div>
   );
-});
+}

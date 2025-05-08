@@ -1,18 +1,14 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import observerPlugin from 'mobx-react-observer/babel-plugin'
 
-// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
-    react()
+    react({
+      babel: {
+        plugins: [observerPlugin()]
+      }
+    })
   ],
-  // Base path for GitHub Pages deployment
   base: '/react-mobx-starter/',
-  server: {
-    port: 3000,
-    open: true
-  },
-  build: {
-    outDir: 'dist'
-  }
 });

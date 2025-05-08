@@ -1,5 +1,4 @@
 import styles from "./tasks.module.scss";
-import { observer } from "mobx-react-lite";
 import { Button } from "../button/button";
 import trash from "../../icons/trash.svg";
 import cn from "classnames";
@@ -10,7 +9,7 @@ import { CSSTransition, TransitionGroup } from "react-transition-group";
 import { CheckCircle } from "../../icons/check-circle";
 import { taskStore } from "../../store/task-store";
 
-export const Tasks = observer(() => {
+export function Tasks() {
   const { rememberElement, focusElement } = useFocus<HTMLInputElement>();
 
   return (
@@ -95,4 +94,4 @@ export const Tasks = observer(() => {
       )}
     </div>
   );
-});
+}

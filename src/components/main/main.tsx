@@ -2,10 +2,9 @@ import { useEffect } from "react";
 import styles from "./main.module.scss";
 import { Users } from "../users/users";
 import { Tasks } from "../tasks/tasks";
-import { observer } from "mobx-react-lite";
 import { taskStore } from "../../store/task-store";
 
-export const Main = observer(() => {
+export function Main() {
   useEffect(() => {
     taskStore.load();
   }, [taskStore]);
@@ -30,4 +29,4 @@ export const Main = observer(() => {
       </div>
     </div>
   );
-});
+}

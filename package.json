@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "typecheck": "npx tsc --noEmit",
-    "prettier": "npx prettier --write \"src/**/*.{ts,tsx,css}\"",
+    "prettier:fix": "npx prettier --write \"src/**/*.{ts,tsx,css}\"",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "test": "vitest"
@@ -16,6 +16,7 @@
     "mobx": "^6.10.2",
     "mobx-log": "^2.1.1",
     "mobx-react-lite": "^4.0.5",
+    "mobx-react-observer": "^1.1.0",
     "mobx-utils": "^6.0.8",
     "normalize.css": "^8.0.1",
     "react": "^18.2.0",
